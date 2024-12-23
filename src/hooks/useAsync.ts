@@ -11,9 +11,7 @@ interface AsyncState<T> {
  * @param asyncFunction - Async function to execute
  * @returns Object containing execute function, loading state, error, and value
  */
-export function useAsync<T>(
-  asyncFunction: (...args: any[]) => Promise<T>
-): {
+export function useAsync<T>(asyncFunction: (...args: any[]) => Promise<T>): {
   execute: (...args: any[]) => Promise<void>;
   status: AsyncState<T>;
 } {
@@ -41,4 +39,4 @@ export function useAsync<T>(
   );
 
   return { execute, status };
-} 
+}

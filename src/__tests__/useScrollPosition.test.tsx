@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useScrollPosition } from "../useScrollPosition";
+import { useScrollPosition } from "../hooks/useScrollPosition";
 import { act } from "react";
 
 describe("useScrollPosition", () => {

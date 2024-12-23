@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useResizeObserver } from "../useResizeObserver";
+import { useResizeObserver } from "../hooks/useResizeObserver";
 import { act } from "react";
 
 // Mock DOMRectReadOnly

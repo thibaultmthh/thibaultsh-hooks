@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useContainerScroll } from "../useContainerScroll";
+import { useContainerScroll } from "../hooks/useContainerScroll";
 import { act } from "react";
 
 describe("useContainerScroll", () => {

@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useClickOutside } from "../useClickOutside";
+import { useClickOutside } from "../hooks/useClickOutside";
 import { useRef } from "react";
 
 describe("useClickOutside", () => {

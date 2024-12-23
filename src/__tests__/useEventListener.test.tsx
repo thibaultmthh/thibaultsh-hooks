@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useEventListener } from "../useEventListener";
+import { useEventListener } from "../hooks/useEventListener";
 import { fireEvent } from "@testing-library/react";
 
 describe("useEventListener", () => {

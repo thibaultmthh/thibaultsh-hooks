@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useKeyPress } from "../useKeyPress";
+import { useKeyPress } from "../hooks/useKeyPress";
 import { fireEvent } from "@testing-library/react";
 
 describe("useKeyPress", () => {

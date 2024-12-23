@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react";
 import { act } from "react";
-import { useCookieState } from "../useCookieState";
+import { useCookieState } from "../hooks/useCookieState";
 
 describe("useCookieState", () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useElementSize } from "../useElementSize";
+import { useElementSize } from "../hooks/useElementSize";
 import { act } from "react";
 
 // Mock ResizeObserver

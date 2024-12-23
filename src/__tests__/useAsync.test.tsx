@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react";
-import { useAsync } from "../useAsync";
+import { useAsync } from "../hooks/useAsync";
 
 describe("useAsync", () => {
   it("should handle successful async operation", async () => {

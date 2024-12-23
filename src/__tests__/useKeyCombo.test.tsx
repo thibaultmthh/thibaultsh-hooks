@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useKeyCombo } from "../useKeyCombo";
+import { useKeyCombo } from "../hooks/useKeyCombo";
 import { fireEvent } from "@testing-library/react";
 
 describe("useKeyCombo", () => {

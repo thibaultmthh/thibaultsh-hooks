@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useSessionStorageState } from "../useSessionStorageState";
+import { useSessionStorageState } from "../hooks/useSessionStorageState";
 import { act } from "react";
 
 describe("useSessionStorageState", () => {

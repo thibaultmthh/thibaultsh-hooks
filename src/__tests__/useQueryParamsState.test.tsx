@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useQueryParamsState } from "../useQueryParamsState";
+import { useQueryParamsState } from "../hooks/useQueryParamsState";
 import { act } from "react";
 
 describe("useQueryParamsState", () => {

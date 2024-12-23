@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react";
-import { useWindowSize } from "../useWindowSize";
+import { useWindowSize } from "../hooks/useWindowSize";
 import { act } from "react";
 
 describe("useWindowSize", () => {

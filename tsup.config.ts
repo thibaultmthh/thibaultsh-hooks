@@ -1,7 +1,6 @@
-import { defineConfig } from "tsup";
+import { defineConfig, Format, Options } from "tsup";
 
-export default defineConfig({
-  entry: ["src/hooks/**/*.ts", "src/index.ts"],
+const commonConfig: Options = {
   format: ["cjs", "esm"],
   dts: true,
   splitting: true,
@@ -12,7 +11,24 @@ export default defineConfig({
   },
   external: ["react"],
   minify: true,
-  esbuildOptions(options) {
-    options.pure = ["console.log", "console.debug", "console.info"];
+  outExtension({ format }) {
+    return {
+      js: format === "cjs" ? ".cjs" : ".mjs",
+    };
   },
-});
+};
+
+export default defineConfig([
+  {
+    // Hooks configuration
+    ...commonConfig,
+    entry: ["src/hooks/**/*.ts"],
+    outDir: "dist",
+  },
+  {
+    // Main index configuration
+    ...commonConfig,
+    entry: ["src/index.ts"],
+    outDir: "dist",
+  },
+]);

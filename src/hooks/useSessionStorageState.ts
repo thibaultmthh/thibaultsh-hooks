@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
  * @example
  * const [value, setValue] = useSessionStorageState('my-key', 'initial value');
  */
-export function useSessionStorageState<T>(key: string, initialValue: T): [T, (value: T) => void] {
+export function useSessionStorageState<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
   // Get from session storage then
   // parse stored json or return initialValue
   const readValue = (): T => {
@@ -31,7 +31,7 @@ export function useSessionStorageState<T>(key: string, initialValue: T): [T, (va
 
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to sessionStorage.
-  const setValue = (value: T) => {
+  const setValue = (value: T | ((val: T) => T)) => {
     try {
       // Allow value to be a function so we have same API as useState
       const valueToStore = value instanceof Function ? value(storedValue) : value;

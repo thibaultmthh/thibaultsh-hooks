@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, RefObject } from "react";
  * @param ref - (optional) React ref object for the element to monitor
  * @returns Tuple containing ref to attach to element and boolean indicating hover state
  */
-export const useHover = <T extends HTMLElement = HTMLElement>(_ref?: RefObject<T> | null): [RefObject<T>, boolean] => {
+export const useHover = <T extends HTMLElement>(_ref?: RefObject<T | null> | null): [RefObject<T>, boolean] => {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<T>(null);
 
@@ -25,5 +25,5 @@ export const useHover = <T extends HTMLElement = HTMLElement>(_ref?: RefObject<T
     };
   }, []);
 
-  return [_ref || ref, isHovered];
+  return [(ref as RefObject<T>) || _ref, isHovered];
 };

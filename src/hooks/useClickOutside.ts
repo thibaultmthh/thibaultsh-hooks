@@ -8,7 +8,7 @@ type Handler = (event: MouseEvent | TouchEvent) => void;
  * @param handler - Callback function to execute when click outside occurs
  */
 export const useClickOutside = <T extends HTMLElement = HTMLElement>(
-  ref: RefObject<T> | null,
+  ref: RefObject<T | null> | null,
   handler: Handler
 ): void => {
   useEffect(() => {

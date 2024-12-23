@@ -7,10 +7,13 @@ type Handler = (event: MouseEvent | TouchEvent) => void;
  * @param ref - React ref object for the element to monitor
  * @param handler - Callback function to execute when click outside occurs
  */
-export const useClickOutside = <T extends HTMLElement = HTMLElement>(ref: RefObject<T>, handler: Handler): void => {
+export const useClickOutside = <T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T> | null,
+  handler: Handler
+): void => {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) {
+      if (!ref?.current || ref.current.contains(event.target as Node)) {
         return;
       }
       handler(event);

@@ -2,14 +2,15 @@ import { useState, useRef, useEffect, RefObject } from "react";
 
 /**
  * Hook that detects hover state on an element
+ * @param ref - (optional) React ref object for the element to monitor
  * @returns Tuple containing ref to attach to element and boolean indicating hover state
  */
-export const useHover = <T extends HTMLElement = HTMLElement>(): [RefObject<T>, boolean] => {
+export const useHover = <T extends HTMLElement = HTMLElement>(_ref?: RefObject<T>): [RefObject<T>, boolean] => {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef<T>(null);
 
   useEffect(() => {
-    const element = ref.current;
+    const element = _ref?.current || ref.current;
     if (!element) return;
 
     const handleMouseEnter = () => setIsHovered(true);
@@ -24,5 +25,5 @@ export const useHover = <T extends HTMLElement = HTMLElement>(): [RefObject<T>, 
     };
   }, []);
 
-  return [ref, isHovered];
+  return [_ref || ref, isHovered];
 };

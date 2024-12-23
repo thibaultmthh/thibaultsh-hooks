@@ -1,63 +1,122 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
-interface Options {
-  /** Duration in milliseconds before long press is triggered */
+interface LongPressOptions {
+  /** Duration in milliseconds before long press is triggered (default: 400) */
   delay?: number;
-  /** Callback when long press starts */
-  onStart?: () => void;
-  /** Callback when long press ends */
-  onEnd?: () => void;
+  /** Whether to disable context menu on long press (default: true) */
+  preventContext?: boolean;
+  /** Callbacks for different long press states */
+  onLongPressStart?: () => void;
+  onLongPress?: () => void;
+  onLongPressEnd?: () => void;
+  /** Callbacks for normal press states */
+  onPress?: () => void;
+  onPressStart?: () => void;
+  onPressEnd?: () => void;
   /** Callback when long press is canceled */
   onCancel?: () => void;
 }
 
+interface PressState {
+  isPressed: boolean;
+  isLongPressed: boolean;
+}
+
 /**
- * Hook that detects a long press gesture
- * @param callback - Function to call when long press is detected
- * @param options - Configuration options
- * @returns Object with event handlers to attach to target element
+ * Hook that handles long press interactions for both mouse and touch events
+ * @param options - Configuration options for the long press behavior
+ * @param options.delay - Duration in milliseconds before long press is triggered (default: 400)
+ * @param options.preventContext - Whether to disable context menu on long press (default: true)
+ * @param options.onLongPressStart - Callback fired when long press starts
+ * @param options.onLongPress - Callback fired when long press is triggered
+ * @param options.onLongPressEnd - Callback fired when long press ends
+ * @param options.onPress - Callback fired for normal press (when released before long press triggers)
+ * @param options.onPressStart - Callback fired when press starts
+ * @param options.onPressEnd - Callback fired when press ends
+ * @param options.onCancel - Callback fired when press is canceled
+ * @returns Object containing event handlers and current press state
  */
-export function useLongPress(callback: () => void, options: Options = {}) {
-  const { delay = 400, onStart, onEnd, onCancel } = options;
+export function useLongPress(options: LongPressOptions = {}) {
+  const {
+    delay = 400,
+    preventContext = true,
+    onLongPressStart,
+    onLongPress,
+    onLongPressEnd,
+    onPress,
+    onPressStart,
+    onPressEnd,
+    onCancel,
+  } = options;
+
   const timeout = useRef<ReturnType<typeof setTimeout>>();
-  const target = useRef<EventTarget>();
+  const [pressState, setPressState] = useState<PressState>({
+    isPressed: false,
+    isLongPressed: false,
+  });
 
   const start = useCallback(
     (event: React.TouchEvent | React.MouseEvent) => {
-      event.preventDefault();
-      const element = event.target;
-      target.current = element;
+      if (preventContext) {
+        event.preventDefault();
+      }
+
+      setPressState((prev) => ({ ...prev, isPressed: true }));
+      onPressStart?.();
+
       timeout.current = setTimeout(() => {
-        onStart?.();
-        callback();
+        setPressState((prev) => ({ ...prev, isLongPressed: true }));
+        onLongPressStart?.();
+        onLongPress?.();
       }, delay);
     },
-    [callback, delay, onStart]
+    [delay, onLongPress, onLongPressStart, onPressStart, preventContext]
   );
 
-  const clear = useCallback(
-    (event: React.TouchEvent | React.MouseEvent, shouldTriggerEnd = true) => {
-      timeout.current && clearTimeout(timeout.current);
-      shouldTriggerEnd && onEnd?.();
-      target.current = undefined;
+  const end = useCallback(
+    (event: React.TouchEvent | React.MouseEvent) => {
+      const wasLongPress = pressState.isLongPressed;
+
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+
+      if (wasLongPress) {
+        onLongPressEnd?.();
+      } else {
+        onPress?.();
+      }
+
+      onPressEnd?.();
+      setPressState({ isPressed: false, isLongPressed: false });
     },
-    [onEnd]
+    [onLongPressEnd, onPress, onPressEnd, pressState]
   );
 
   const cancel = useCallback(
     (event: React.TouchEvent | React.MouseEvent) => {
-      clear(event, false);
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
       onCancel?.();
+      onPressEnd?.();
+      setPressState({ isPressed: false, isLongPressed: false });
     },
-    [clear, onCancel]
+    [onCancel, onPressEnd]
   );
 
   return {
-    onMouseDown: start,
-    onMouseUp: clear,
-    onMouseLeave: cancel,
-    onTouchStart: start,
-    onTouchEnd: clear,
-    onTouchCancel: cancel,
+    handlers: {
+      onMouseDown: start,
+      onMouseUp: end,
+      onMouseLeave: cancel,
+      onTouchStart: start,
+      onTouchEnd: end,
+      onTouchCancel: cancel,
+    },
+    state: {
+      isPressed: pressState.isPressed,
+      isLongPressed: pressState.isLongPressed,
+    },
   };
 }

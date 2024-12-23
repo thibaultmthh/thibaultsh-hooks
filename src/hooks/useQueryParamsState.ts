@@ -16,7 +16,7 @@ export function useQueryParamsState<T>(
     serialize?: (value: T) => string;
     deserialize?: (value: string) => T;
   } = {}
-): [T, (value: T) => void] {
+): [T, (value: T | ((val: T) => T)) => void] {
   const { serialize = JSON.stringify, deserialize = JSON.parse } = options;
 
   // Read value from URL
@@ -39,7 +39,7 @@ export function useQueryParamsState<T>(
 
   // Update state and URL when value changes
   const updateValue = useCallback(
-    (newValue: T) => {
+    (newValue: T | ((val: T) => T)) => {
       try {
         // Allow value to be a function so we have same API as useState
         const valueToStore = newValue instanceof Function ? newValue(value) : newValue;

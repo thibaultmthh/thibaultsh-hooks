@@ -53,7 +53,7 @@
   "bugs": {
     "url": "https://github.com/thibaultmthh/thibaultsh-hooks/issues"
   },
-  "homepage": "https://github.com/thibaultmthh/thibaultsh-hooks#readme",
+  "homepage": "https://thibault.sh/hooks",
   "peerDependencies": {
     "react": ">=16.8.0"
   },

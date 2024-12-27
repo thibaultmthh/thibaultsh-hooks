@@ -16,7 +16,7 @@ interface ContainerScroll {
  * @param delay - Delay in milliseconds before setting isScrolling to false
  * @returns Object containing scroll position and dimension information
  */
-export function useContainerScroll(containerRef: RefObject<HTMLElement>, delay: number = 150): ContainerScroll {
+export function useContainerScroll(containerRef: RefObject<HTMLElement | null>, delay: number = 150): ContainerScroll {
   const [scroll, setScroll] = useState<ContainerScroll>({
     scrollTop: 0,
     scrollLeft: 0,

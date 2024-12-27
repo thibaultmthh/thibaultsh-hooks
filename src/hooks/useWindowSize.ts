@@ -8,6 +8,9 @@ interface WindowSize {
 /**
  * Hook that tracks window dimensions
  * @returns Object containing current window width and height
+ * @example
+ * const { width, height } = useWindowSize();
+ * console.log(width, height);
  */
 export function useWindowSize(): WindowSize {
   const [windowSize, setWindowSize] = useState<WindowSize>({

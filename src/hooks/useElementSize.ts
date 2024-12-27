@@ -39,4 +39,4 @@ export function useElementSize(elementRef: RefObject<HTMLElement>): ElementSize 
   }, [elementRef]);
 
   return size;
-} 
+}

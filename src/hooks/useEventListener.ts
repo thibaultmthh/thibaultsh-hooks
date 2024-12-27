@@ -35,4 +35,4 @@ export function useEventListener<K extends keyof EventMap>(
       targetElement.removeEventListener(eventName, eventListener, options);
     };
   }, [eventName, element, options]);
-} 
+}

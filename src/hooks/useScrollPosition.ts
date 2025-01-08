@@ -11,8 +11,8 @@ interface ScrollPosition {
  */
 export function useScrollPosition(): ScrollPosition {
   const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({
-    x: typeof window !== "undefined" ? window.pageXOffset : 0,
-    y: typeof window !== "undefined" ? window.pageYOffset : 0,
+    x: typeof window !== "undefined" ? window.scrollX : 0,
+    y: typeof window !== "undefined" ? window.scrollY : 0,
   });
 
   useEffect(() => {
@@ -20,8 +20,8 @@ export function useScrollPosition(): ScrollPosition {
 
     const handleScroll = () => {
       setScrollPosition({
-        x: window.pageXOffset,
-        y: window.pageYOffset,
+        x: window.scrollX,
+        y: window.scrollY,
       });
     };
 

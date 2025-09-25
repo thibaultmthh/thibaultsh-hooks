@@ -11,33 +11,34 @@ npm install @thibaultsh/hooks
 ## Features
 
 ### State Management
-- `useLocalStorageState` - Persist state in localStorage
-- `useSessionStorageState` - Session storage state management
-- `useCookieState` - Cookie state management
-- `useQueryParamsState` - URL query parameters state
+- [`useLocalStorageState`](https://thibault.sh/hooks/use-local-storage-state) - Persist state in localStorage
+- [`useSessionStorageState`](https://thibault.sh/hooks/use-session-storage-state) - Session storage state management
+- [`useCookieState`](https://thibault.sh/hooks/use-cookie-state) - Cookie state management
+- [`useQueryParamsState`](https://thibault.sh/hooks/use-query-params-state) - URL query parameters state
 
 ### UI/Interaction
-- `useClickOutside` - Detect clicks outside elements
-- `useHover` - Track element hover state
-- `useKeyPress` - Keyboard input handling
-- `useKeyCombo` - Keyboard shortcuts
-- `useLongPress` - Long press detection
+- [`useClickOutside`](https://thibault.sh/hooks/use-click-outside) - Detect clicks outside elements
+- [`useHover`](https://thibault.sh/hooks/use-hover) - Track element hover state
+- [`useKeyPress`](https://thibault.sh/hooks/use-key-press) - Keyboard input handling
+- [`useKeyCombo`](https://thibault.sh/hooks/use-key-combo) - Keyboard shortcuts
+- [`useLongPress`](https://thibault.sh/hooks/use-long-press) - Long press detection
 
 ### Layout/Viewport
-- `useMediaQuery` - Responsive design helper
-- `useWindowSize` - Window dimensions tracking
-- `useScrollPosition` - Scroll position tracking
-- `useContainerScroll` - Container scroll management
-- `useElementSize` - Element size observer
-- `useIntersectionObserver` - Viewport intersection
-- `useResizeObserver` - Element resize detection
+- [`useMediaQuery`](https://thibault.sh/hooks/use-media-query) - Responsive design helper
+- [`useWindowSize`](https://thibault.sh/hooks/use-window-size) - Window dimensions tracking
+- [`useScrollPosition`](https://thibault.sh/hooks/use-scroll-position) - Scroll position tracking
+- [`useContainerScroll`](https://thibault.sh/hooks/use-container-scroll) - Container scroll management
+- [`useElementSize`](https://thibault.sh/hooks/use-element-size) - Element size observer
+- [`useIntersectionObserver`](https://thibault.sh/hooks/use-intersection-observer) - Viewport intersection
+- [`useResizeObserver`](https://thibault.sh/hooks/use-resize-observer) - Element resize detection
 
 ### Utility
-- `useAsync` - Async operation wrapper
-- `useDebounce` - Value debouncing
-- `useThrottle` - Action throttling
-- `useInterval` - Interval handling
-- `useEventListener` - Event subscription
+- [`useAsync`](https://thibault.sh/hooks/use-async) - Async operation wrapper
+- [`useCountdown`](https://thibault.sh/hooks/use-countdown) - Countdown timer to target date
+- [`useDebounce`](https://thibault.sh/hooks/use-debounce) - Value debouncing
+- [`useThrottle`](https://thibault.sh/hooks/use-throttle) - Action throttling
+- [`useInterval`](https://thibault.sh/hooks/use-interval) - Interval handling
+- [`useEventListener`](https://thibault.sh/hooks/use-event-listener) - Event subscription
 
 ## Usage
 

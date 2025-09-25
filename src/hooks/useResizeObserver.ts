@@ -43,11 +43,11 @@ interface ResizeObserverEntry {
  *
  * @see https://thibault.sh/hooks/use-resize-observer
  */
-export function useResizeObserver<T extends HTMLElement>(elementRef: RefObject<T>): ResizeObserverEntry | null {
+export function useResizeObserver<T extends HTMLElement>(elementRef: RefObject<T> | null): ResizeObserverEntry | null {
   const [entry, setEntry] = useState<ResizeObserverEntry | null>(null);
 
   useEffect(() => {
-    if (!elementRef.current) return;
+    if (!elementRef?.current) return;
 
     const element = elementRef.current;
     const resizeObserver = new ResizeObserver((entries) => {

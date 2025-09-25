@@ -37,14 +37,14 @@ interface ElementSize {
  *
  * @see https://thibault.sh/hooks/use-element-size
  */
-export function useElementSize<T extends HTMLElement>(elementRef: RefObject<T>): ElementSize {
+export function useElementSize<T extends HTMLElement>(elementRef: RefObject<T> | null): ElementSize {
   const [size, setSize] = useState<ElementSize>({
     width: 0,
     height: 0,
   });
 
   useEffect(() => {
-    if (!elementRef.current) return;
+    if (!elementRef?.current) return;
 
     const element = elementRef.current;
     const resizeObserver = new ResizeObserver((entries) => {

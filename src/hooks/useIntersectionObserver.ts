@@ -44,13 +44,13 @@ interface IntersectionOptions extends IntersectionObserverInit {
  * @see https://thibault.sh/hooks/use-intersection-observer
  */
 export function useIntersectionObserver<T extends HTMLElement>(
-  elementRef: RefObject<T>,
+  elementRef: RefObject<T> | null,
   { threshold = 0, root = null, rootMargin = "0%", freezeOnceVisible = false }: IntersectionOptions = {}
 ): IntersectionObserverEntry | null {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
 
   useEffect(() => {
-    const element = elementRef.current;
+    const element = elementRef?.current;
     if (!element) return;
 
     // Don't observe if element is already visible and freeze is enabled

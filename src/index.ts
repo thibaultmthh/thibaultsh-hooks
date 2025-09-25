@@ -15,7 +15,6 @@ export * from "./hooks/useIntersectionObserver";
 export * from "./hooks/useResizeObserver";
 export * from "./hooks/useDebounce";
 export * from "./hooks/useThrottle";
-export * from "./hooks/useTimer";
 export * from "./hooks/useInterval";
 export * from "./hooks/useEventListener";
 export * from "./hooks/useLocalStorageState";

@@ -1,6 +1,6 @@
 {
   "name": "@thibault.sh/hooks",
-  "version": "0.0.15",
+  "version": "0.0.17",
   "description": "A comprehensive collection of React hooks for browser storage, UI interactions, and more",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

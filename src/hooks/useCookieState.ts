@@ -17,13 +17,52 @@ interface CookieOptions {
 }
 
 /**
- * Hook for managing state persisted in a browser cookie
- * @param name - The name of the cookie
- * @param initialValue - The initial value to use if no cookie exists
+ * Hook for managing state that persists in browser cookies with SSR support.
+ *
+ * Provides a React state-like interface for reading, writing, and deleting cookies.
+ * Automatically handles encoding/decoding, error handling, and server-side rendering compatibility.
+ *
+ * @param name - The name of the cookie to manage
+ * @param initialValue - The default value to use when no cookie exists or on server-side
+ *
  * @returns A tuple containing:
- * - The current cookie value (or null if not set)
- * - A function to update the cookie value and its options
- * - A function to delete the cookie
+ *   - `value`: Current cookie value as string, or null if not set
+ *   - `setCookie`: Function to update the cookie with optional configuration
+ *   - `deleteCookie`: Function to remove the cookie from the browser
+ *
+ * @example
+ * ```tsx
+ * const [theme, setTheme, deleteTheme] = useCookieState('theme', 'light');
+ *
+ * // Read current value
+ * console.log(theme); // 'light' or saved value
+ *
+ * // Update cookie with default options (7 days expiry)
+ * setTheme('dark');
+ *
+ * // Update with custom options
+ * setTheme('dark', {
+ *   days: 30,
+ *   secure: true,
+ *   sameSite: 'Strict'
+ * });
+ *
+ * // Remove the cookie
+ * deleteTheme();
+ * ```
+ *
+ * @example
+ * ```tsx
+ * // User preferences with longer expiry
+ * const [userPrefs, setUserPrefs] = useCookieState('preferences', '{}');
+ *
+ * const updatePreference = (key: string, value: any) => {
+ *   const prefs = JSON.parse(userPrefs || '{}');
+ *   prefs[key] = value;
+ *   setUserPrefs(JSON.stringify(prefs), { days: 365 });
+ * };
+ * ```
+ * @see https://thibault.sh/hooks/use-cookie-state
  */
 export function useCookieState(
   name: string,

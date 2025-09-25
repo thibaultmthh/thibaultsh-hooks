@@ -1,12 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Custom hook that creates a countdown timer based on a target date
- * @param countDownDate - Target date in milliseconds (timestamp)
- * @param refreshRate - Optional interval in milliseconds to update the countdown (defaults to 1000ms)
- * @returns A tuple containing [days, hours, minutes, seconds] remaining until the target date
+ * Hook that creates a countdown timer to a target date with automatic updates.
+ *
+ * Provides real-time countdown values that update at a specified interval.
+ * Returns zero values when the target date has passed.
+ *
+ * @param countDownDate - Target date as a timestamp in milliseconds (e.g., `new Date('2024-12-31').getTime()`)
+ * @param refreshRate - Update interval in milliseconds (defaults to 1000ms for 1-second updates)
+ *
+ * @returns A readonly tuple `[days, hours, minutes, seconds]` representing time remaining
+ *
+ * @example
+ * ```tsx
+ * const targetDate = new Date('2024-12-31 23:59:59').getTime();
+ * const [days, hours, minutes, seconds] = useCountdown(targetDate);
+ *
+ * return (
+ *   <div>
+ *     {days}d {hours}h {minutes}m {seconds}s remaining
+ *   </div>
+ * );
+ * ```
+ *
+ * @example
+ * // Custom refresh rate (every 100ms for smoother animation)
+ * const [days, hours, minutes, seconds] = useCountdown(targetDate, 100);
+ * @see https://thibault.sh/hooks/use-countdown
  */
-const useCountdown = (countDownDate: number, refreshRate?: number) => {
+export function useCountdown(countDownDate: number, refreshRate?: number) {
   const now = new Date().getTime();
   const firstVal = countDownDate - now;
   const [countDown, setCountDown] = useState(firstVal);
@@ -28,7 +50,7 @@ const useCountdown = (countDownDate: number, refreshRate?: number) => {
   }, [countDownDate, refreshRate]);
 
   return getReturnValues(countDown);
-};
+}
 
 /**
  * Calculates the remaining time components from a countdown value
@@ -50,5 +72,3 @@ const getReturnValues = (countDown: number) => {
 
   return [days, hours, minutes, seconds] as const;
 };
-
-export default useCountdown;

@@ -1,9 +1,37 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Hook that sets up an interval that is properly cleaned up when the component unmounts
- * @param callback - Function to call on each interval
- * @param delay - Delay in milliseconds (null to pause)
+ * Hook that creates a setInterval that automatically cleans up on unmount.
+ *
+ * Provides a declarative way to use intervals in React components with proper
+ * cleanup and the ability to pause/resume by passing null as the delay.
+ *
+ * @param callback - The function to execute on each interval tick
+ * @param delay - The delay in milliseconds between executions, or null to pause the interval
+ *
+ * @example
+ * ```tsx
+ * function Timer() {
+ *   const [count, setCount] = useState(0);
+ *   const [isRunning, setIsRunning] = useState(true);
+ *
+ *   // Increment count every second when running
+ *   useInterval(() => {
+ *     setCount(count => count + 1);
+ *   }, isRunning ? 1000 : null);
+ *
+ *   return (
+ *     <div>
+ *       <p>Count: {count}</p>
+ *       <button onClick={() => setIsRunning(!isRunning)}>
+ *         {isRunning ? 'Pause' : 'Resume'}
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-interval
  */
 export function useInterval(callback: () => void, delay: number | null) {
   const savedCallback = useRef(callback);
@@ -22,4 +50,4 @@ export function useInterval(callback: () => void, delay: number | null) {
     const id = setInterval(tick, delay);
     return () => clearInterval(id);
   }, [delay]);
-} 
+}

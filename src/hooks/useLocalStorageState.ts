@@ -1,12 +1,47 @@
 import { useState, useEffect } from "react";
 
 /**
- * Hook for managing state persisted in localStorage
- * @param key - The localStorage key
- * @param initialValue - The initial value to use if no value exists in storage
- * @returns A tuple containing the current value and a setter function
+ * Hook that manages state synchronized with localStorage.
+ *
+ * Provides a useState-like interface that automatically persists state changes
+ * to localStorage and initializes from stored values on mount. Handles SSR
+ * compatibility and JSON serialization/deserialization automatically.
+ *
+ * @template T - The type of the value being stored
+ * @param key - The localStorage key to use for persistence
+ * @param initialValue - The default value to use if no stored value exists
+ *
+ * @returns A tuple containing:
+ *   - Current stored value (T)
+ *   - Setter function that updates both state and localStorage
+ *
  * @example
- * const [value, setValue] = useLocalStorageState('my-key', 'initial value');
+ * ```tsx
+ * function UserPreferences() {
+ *   const [theme, setTheme] = useLocalStorageState('theme', 'light');
+ *   const [settings, setSettings] = useLocalStorageState('settings', {
+ *     notifications: true,
+ *     language: 'en'
+ *   });
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+ *         Current theme: {theme}
+ *       </button>
+ *
+ *       <button onClick={() => setSettings(prev => ({
+ *         ...prev,
+ *         notifications: !prev.notifications
+ *       }))}>
+ *         Notifications: {settings.notifications ? 'On' : 'Off'}
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-local-storage-state
  */
 export function useLocalStorageState<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
   // Get from local storage then

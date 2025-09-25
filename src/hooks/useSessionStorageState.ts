@@ -1,12 +1,40 @@
 import { useState, useEffect } from "react";
 
 /**
- * Hook for managing state persisted in sessionStorage
- * @param key - The sessionStorage key
- * @param initialValue - The initial value to use if no value exists in storage
- * @returns A tuple containing the current value and a setter function
+ * Hook that manages state synchronized with sessionStorage.
+ *
+ * Provides persistent state that survives page refreshes but is cleared when
+ * the browser tab is closed. Automatically handles JSON serialization/deserialization
+ * and provides SSR-safe initialization.
+ *
+ * @template T - The type of the stored value
+ * @param key - The sessionStorage key to store the value under
+ * @param initialValue - The default value used when no stored value exists
+ *
+ * @returns A tuple containing:
+ *   - The current stored value (or initial value if none exists)
+ *   - A setter function that updates both state and sessionStorage
+ *
  * @example
- * const [value, setValue] = useSessionStorageState('my-key', 'initial value');
+ * ```tsx
+ * function UserPreferences() {
+ *   const [theme, setTheme] = useSessionStorageState('theme', 'light');
+ *   const [sidebarOpen, setSidebarOpen] = useSessionStorageState('sidebar', true);
+ *
+ *   return (
+ *     <div>
+ *       <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+ *         Current theme: {theme}
+ *       </button>
+ *       <button onClick={() => setSidebarOpen(!sidebarOpen)}>
+ *         Sidebar: {sidebarOpen ? 'Open' : 'Closed'}
+ *       </button>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-session-storage-state
  */
 export function useSessionStorageState<T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] {
   // Get from session storage then

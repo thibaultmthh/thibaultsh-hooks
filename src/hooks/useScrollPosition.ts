@@ -6,8 +6,35 @@ interface ScrollPosition {
 }
 
 /**
- * Hook that tracks window scroll position
- * @returns Object containing current scroll x and y coordinates
+ * Hook that tracks the current window scroll position in real-time.
+ *
+ * Automatically updates when the user scrolls and handles SSR scenarios
+ * by safely checking for window availability.
+ *
+ * @returns An object containing:
+ *   - `x`: Horizontal scroll position in pixels
+ *   - `y`: Vertical scroll position in pixels
+ *
+ * @example
+ * ```tsx
+ * function ScrollIndicator() {
+ *   const { x, y } = useScrollPosition();
+ *
+ *   return (
+ *     <div className="scroll-info">
+ *       <p>Horizontal: {x}px</p>
+ *       <p>Vertical: {y}px</p>
+ *       {y > 100 && (
+ *         <button onClick={() => window.scrollTo(0, 0)}>
+ *           Back to Top
+ *         </button>
+ *       )}
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-scroll-position
  */
 export function useScrollPosition(): ScrollPosition {
   const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({
@@ -32,4 +59,4 @@ export function useScrollPosition(): ScrollPosition {
   }, []);
 
   return scrollPosition;
-} 
+}

@@ -1,13 +1,49 @@
 import { useState, useEffect, useCallback } from "react";
 
 /**
- * Hook for managing state persisted in URL query parameters
- * @param key - The query parameter key
- * @param initialValue - The initial value to use if the parameter doesn't exist
- * @param options - Configuration options
- * @param options.serialize - Function to convert value to string (default: JSON.stringify)
- * @param options.deserialize - Function to parse string back to value (default: JSON.parse)
- * @returns A tuple containing the current value and a setter function
+ * Hook that manages state synchronized with URL query parameters.
+ *
+ * Automatically persists state to the URL and keeps it in sync with browser
+ * navigation (back/forward buttons). Perfect for shareable URLs and maintaining
+ * state across page refreshes.
+ *
+ * @template T - The type of the state value
+ * @param key - The query parameter key to use in the URL
+ * @param initialValue - Default value when the parameter doesn't exist
+ * @param options - Configuration options for serialization
+ * @param options.serialize - Custom function to convert value to string (defaults to JSON.stringify)
+ * @param options.deserialize - Custom function to parse string back to value (defaults to JSON.parse)
+ *
+ * @returns A tuple containing:
+ *   - Current state value (synced with URL)
+ *   - Setter function (updates both state and URL)
+ *
+ * @example
+ * ```tsx
+ * function SearchPage() {
+ *   const [query, setQuery] = useQueryParamsState('q', '');
+ *   const [filters, setFilters] = useQueryParamsState('filters', { category: 'all' });
+ *
+ *   return (
+ *     <div>
+ *       <input
+ *         value={query}
+ *         onChange={(e) => setQuery(e.target.value)}
+ *         placeholder="Search..."
+ *       />
+ *       <select
+ *         value={filters.category}
+ *         onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+ *       >
+ *         <option value="all">All</option>
+ *         <option value="books">Books</option>
+ *       </select>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-query-params-state
  */
 export function useQueryParamsState<T>(
   key: string,

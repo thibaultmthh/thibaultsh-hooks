@@ -29,38 +29,44 @@ interface PressState {
 }
 
 /**
- * A hook that handles both normal press and long press interactions
+ * Hook that handles both normal press and long press interactions with progress tracking.
+ *
+ * Provides event handlers for detecting short taps vs long presses, with smooth progress
+ * animation and customizable timing. Works with both mouse and touch events.
  *
  * @param options - Configuration options for the long press behavior
- * @param options.delay - Duration in milliseconds before a press is considered a long press (default: 400)
- * @param options.preventContext - When true, prevents the default context menu on long press (default: true)
- * @param options.onPress - Callback fired when a normal press (shorter than delay) is completed.
- *                         Triggers only if the press duration was less than the specified delay
- * @param options.onLongPress - Callback fired when a long press is successfully triggered.
- *                             Triggers exactly once when the press duration exceeds the delay
- * @param options.onLongPressCanceled - Callback fired when a long press is canceled before completion.
- *                                     Triggers if the press is released or canceled before reaching the delay threshold
- * @returns Object containing event handlers and current press state
+ * @param options.delay - Duration in milliseconds before triggering long press (default: 400)
+ * @param options.preventContext - Whether to prevent context menu on long press (default: true)
+ * @param options.onPress - Callback for normal press (when released before delay)
+ * @param options.onLongPress - Callback for successful long press (when delay is reached)
+ * @param options.onLongPressCanceled - Callback when long press is interrupted
+ *
+ * @returns Object containing:
+ *   - `handlers`: Event handlers to spread on your element
+ *   - `state`: Current press state with `isPressed`, `isLongPressed`, and `progress` (0-1)
  *
  * @example
  * ```tsx
- * const MyComponent = () => {
+ * function DeleteButton({ onDelete }) {
  *   const { handlers, state } = useLongPress({
  *     delay: 1000,
- *     onPress: () => console.log('Normal press'),
- *     onLongPress: () => console.log('Long press completed'),
- *     onLongPressCanceled: () => console.log('Long press canceled'),
+ *     onPress: () => console.log('Quick tap - no action'),
+ *     onLongPress: onDelete,
+ *     onLongPressCanceled: () => console.log('Canceled deletion')
  *   });
  *
  *   return (
- *     <button {...handlers}>
+ *     <button {...handlers} className={state.isPressed ? 'pressing' : ''}>
  *       {state.isLongPressed
- *         ? 'Long Press!'
- *         : `Hold me (${Math.round(state.progress * 100)}%)`}
+ *         ? 'Deleting...'
+ *         : `Hold to delete (${Math.round(state.progress * 100)}%)`
+ *       }
  *     </button>
  *   );
- * };
+ * }
  * ```
+ *
+ * @see https://thibault.sh/hooks/use-long-press
  */
 export function useLongPress(options: LongPressOptions = {}) {
   const { delay = 400, preventContext = true, onPress, onLongPress, onLongPressCanceled } = options;

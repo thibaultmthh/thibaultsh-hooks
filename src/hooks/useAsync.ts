@@ -7,9 +7,37 @@ interface AsyncState<T> {
 }
 
 /**
- * Hook that handles async operations with loading and error states
- * @param asyncFunction - Async function to execute
- * @returns Object containing execute function, loading state, error, and value
+ * Hook that manages async operations with loading, error, and success states.
+ *
+ * Provides a clean interface for handling asynchronous functions with automatic
+ * state management for loading indicators and error handling.
+ *
+ * @template T - The type of data returned by the async function
+ * @param asyncFunction - The async function to execute
+ *
+ * @returns An object containing:
+ *   - `execute`: Function to trigger the async operation
+ *   - `status`: Current state with `isLoading`, `error`, and `value` properties
+ *
+ * @example
+ * ```tsx
+ * const fetchUser = async (id: string) => {
+ *   const response = await fetch(`/api/users/${id}`);
+ *   return response.json();
+ * };
+ *
+ * const { execute, status } = useAsync(fetchUser);
+ *
+ * // In your component
+ * if (status.isLoading) return <div>Loading...</div>;
+ * if (status.error) return <div>Error: {status.error.message}</div>;
+ * if (status.value) return <div>User: {status.value.name}</div>;
+ *
+ * // Trigger the async operation
+ * <button onClick={() => execute('user-123')}>Load User</button>
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-async
  */
 export function useAsync<T>(asyncFunction: (...args: any[]) => Promise<T>): {
   execute: (...args: any[]) => Promise<void>;

@@ -6,11 +6,38 @@ interface ElementSize {
 }
 
 /**
- * Hook that tracks an element's dimensions using ResizeObserver
- * @param elementRef - React ref object pointing to the target element
- * @returns Object containing current element width and height
+ * Hook that tracks an element's dimensions and updates when the element is resized.
+ *
+ * Uses ResizeObserver to efficiently monitor size changes and provides real-time
+ * width and height measurements. Automatically handles cleanup and provides
+ * initial measurements immediately.
+ *
+ * @param elementRef - React ref object pointing to the target HTML element
+ *
+ * @returns An object containing:
+ *   - `width`: Current width of the element in pixels
+ *   - `height`: Current height of the element in pixels
+ *
+ * @example
+ * ```tsx
+ * function ResizableComponent() {
+ *   const elementRef = useRef<HTMLDivElement>(null);
+ *   const { width, height } = useElementSize(elementRef);
+ *
+ *   return (
+ *     <div>
+ *       <div ref={elementRef} style={{ resize: 'both', overflow: 'auto' }}>
+ *         Resizable content
+ *       </div>
+ *       <p>Size: {width} x {height}px</p>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-element-size
  */
-export function useElementSize(elementRef: RefObject<HTMLElement>): ElementSize {
+export function useElementSize<T extends HTMLElement>(elementRef: RefObject<T>): ElementSize {
   const [size, setSize] = useState<ElementSize>({
     width: 0,
     height: 0,

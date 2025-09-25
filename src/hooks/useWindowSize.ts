@@ -6,11 +6,34 @@ interface WindowSize {
 }
 
 /**
- * Hook that tracks window dimensions
- * @returns Object containing current window width and height
+ * Hook that tracks the browser window dimensions and updates on resize.
+ *
+ * Automatically listens for window resize events and provides the current
+ * width and height. Safe for SSR environments by checking for window availability.
+ *
+ * @returns An object containing:
+ *   - `width`: Current window inner width in pixels
+ *   - `height`: Current window inner height in pixels
+ *
  * @example
- * const { width, height } = useWindowSize();
- * console.log(width, height);
+ * ```tsx
+ * function ResponsiveComponent() {
+ *   const { width, height } = useWindowSize();
+ *
+ *   return (
+ *     <div>
+ *       <p>Window size: {width} x {height}</p>
+ *       {width < 768 ? (
+ *         <MobileLayout />
+ *       ) : (
+ *         <DesktopLayout />
+ *       )}
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-window-size
  */
 export function useWindowSize(): WindowSize {
   const [windowSize, setWindowSize] = useState<WindowSize>({
@@ -35,4 +58,4 @@ export function useWindowSize(): WindowSize {
   }, []);
 
   return windowSize;
-} 
+}

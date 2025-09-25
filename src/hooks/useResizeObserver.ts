@@ -9,13 +9,41 @@ interface ResizeObserverEntry {
 }
 
 /**
- * Hook that tracks element's size changes using ResizeObserver with full entry details
- * @param elementRef - React ref object pointing to the target element
- * @returns Latest ResizeObserverEntry if available, null otherwise
+ * Hook that observes element size changes using the ResizeObserver API.
+ *
+ * Provides detailed resize information including content rect, box sizes, and device pixel ratios.
+ * Automatically cleans up the observer when the component unmounts or the ref changes.
+ *
+ * @param elementRef - React ref object pointing to the target element to observe
+ *
+ * @returns ResizeObserverEntry with detailed size information, or null if no element or no resize has occurred
+ *   - `contentRect`: The content rectangle of the element
+ *   - `contentBoxSize`: Array of content box dimensions
+ *   - `borderBoxSize`: Array of border box dimensions
+ *   - `devicePixelContentBoxSize`: Array of device pixel content box dimensions
+ *   - `target`: The observed element
+ *
+ * @example
+ * ```tsx
+ * function ResponsiveComponent() {
+ *   const containerRef = useRef<HTMLDivElement>(null);
+ *   const resizeEntry = useResizeObserver(containerRef);
+ *
+ *   const width = resizeEntry?.contentRect.width ?? 0;
+ *   const height = resizeEntry?.contentRect.height ?? 0;
+ *
+ *   return (
+ *     <div ref={containerRef}>
+ *       <p>Size: {width} x {height}</p>
+ *       <div>Content adapts based on container size</div>
+ *     </div>
+ *   );
+ * }
+ * ```
+ *
+ * @see https://thibault.sh/hooks/use-resize-observer
  */
-export function useResizeObserver(
-  elementRef: RefObject<HTMLElement>
-): ResizeObserverEntry | null {
+export function useResizeObserver<T extends HTMLElement>(elementRef: RefObject<T>): ResizeObserverEntry | null {
   const [entry, setEntry] = useState<ResizeObserverEntry | null>(null);
 
   useEffect(() => {
@@ -35,4 +63,4 @@ export function useResizeObserver(
   }, [elementRef]);
 
   return entry;
-} 
+}

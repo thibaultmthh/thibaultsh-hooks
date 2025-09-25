@@ -44,7 +44,7 @@ interface IntersectionOptions extends IntersectionObserverInit {
  * @see https://thibault.sh/hooks/use-intersection-observer
  */
 export function useIntersectionObserver<T extends HTMLElement>(
-  elementRef: RefObject<T> | null,
+  elementRef: RefObject<T | null> | null,
   { threshold = 0, root = null, rootMargin = "0%", freezeOnceVisible = false }: IntersectionOptions = {}
 ): IntersectionObserverEntry | null {
   const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);

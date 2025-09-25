@@ -43,7 +43,9 @@ interface ResizeObserverEntry {
  *
  * @see https://thibault.sh/hooks/use-resize-observer
  */
-export function useResizeObserver<T extends HTMLElement>(elementRef: RefObject<T> | null): ResizeObserverEntry | null {
+export function useResizeObserver<T extends HTMLElement>(
+  elementRef: RefObject<T | null> | null
+): ResizeObserverEntry | null {
   const [entry, setEntry] = useState<ResizeObserverEntry | null>(null);
 
   useEffect(() => {

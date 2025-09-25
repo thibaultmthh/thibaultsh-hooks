@@ -46,7 +46,7 @@ type EventMap = WindowEventMap & HTMLElementEventMap & DocumentEventMap;
 export function useEventListener<K extends keyof EventMap, T extends HTMLElement>(
   eventName: K,
   handler: (event: EventMap[K]) => void,
-  element?: RefObject<T> | null,
+  element?: RefObject<T | null> | null,
   options?: boolean | AddEventListenerOptions
 ): void {
   const savedHandler = useRef(handler);

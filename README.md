@@ -36,7 +36,6 @@ npm install @thibaultsh/hooks
 - `useAsync` - Async operation wrapper
 - `useDebounce` - Value debouncing
 - `useThrottle` - Action throttling
-- `useTimer` - Timer management
 - `useInterval` - Interval handling
 - `useEventListener` - Event subscription
 
